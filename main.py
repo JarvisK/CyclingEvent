@@ -1,5 +1,8 @@
+from crawler import TaiwanBikeCrawler
+
 def main():
-    print("test")
+    a = TaiwanBikeCrawler()
+    a.getHtmlSourceCode()
 
 if __name__ == "__main__":
     main()
