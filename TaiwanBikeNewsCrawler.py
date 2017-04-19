@@ -2,7 +2,7 @@ import urllib.request
 from bs4 import BeautifulSoup
 
 
-class TaiwanBikeCrawler():
+class TaiwanBikeNewsCrawler():
     domainURL = "http://www.taiwanbike.org"
     targetURL = "http://www.taiwanbike.org/index.php/2009-01-20-17-17-03"
     pageSeparator = 20
