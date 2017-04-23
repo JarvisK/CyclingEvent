@@ -10,29 +10,29 @@ class TaiwanBikeNewsCrawler():
     __eventURL = []
 
     def startCrawler(self):
-        keep = True
+        morePages = True
         fetchURL = self.__targetURL
 
-        while (keep):
+        while (morePages):
             with urllib.request.urlopen(fetchURL) as response:
                 source = response.read()  # Get response source code
 
                 if source is None:
                     raise ValueError("The source code is empty.")
 
+                print("Processing " + self.__targetURL + "?start=" + str(self.pageSeparator))
+
                 if (not self.parser(sourceCode=source)):
-                    keep = False
+                    morePages = False
                 else:
                     fetchURL = self.__targetURL + "?start=" + str(self.pageSeparator)
                     self.pageSeparator += 20
 
-        print("Crawler success.")
+        print("Taiwan bike news complete.")
 
     def parser(self, sourceCode=None):
         if sourceCode is None:
             raise ValueError("The source code is empty.")
-
-        print("Processing " + self.__targetURL + "...")
 
         soup = BeautifulSoup(sourceCode, "lxml")
         tableRow = soup.find('form', attrs={'name': 'adminForm'}).find('table').find_all('tr')
