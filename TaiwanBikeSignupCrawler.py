@@ -13,13 +13,17 @@ class TaiwanBikeSignupCrawler():
             if source is None:
                 raise ValueError("The source code is empty.")
 
+            print("Processing " + self.__targetURL)
+
             self.parser(sourceCode=source)
+
+        print("Taiwan bike signup complete")
 
     def parser(self, sourceCode=None):
         if sourceCode is None:
             raise ValueError("The source code is emtpy.")
 
-        print("Processing " + self.__targetURL + " ...")
+        print("Processing " + self.__targetURL)
 
         soup = BeautifulSoup(sourceCode, "lxml")
         tableRow = soup.find('td', attrs={'class': 'article_indent'}).find_all('a')
