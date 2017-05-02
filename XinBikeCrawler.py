@@ -22,4 +22,14 @@ class XinBikeCrawler:
             raise ValueError("The source code is empty.")
 
         soup = BeautifulSoup(sourceCode, "lxml")
-        tableRow = soup.find('div', attrs={'class': 'summary'})
+        tableRow = soup.find_all('p')
+        for subRow in tableRow:
+            target_dom = subRow.find('a', attrs={'target': '_blank'})
+            if target_dom is None:
+                continue
+            else:
+                self.__eventURL.append('http:' + str(target_dom.attrs['href']))
+                self.__eventName.append(target_dom.text)
+
+        print(len(self.__eventURL))
+        print(len(self.__eventName))
