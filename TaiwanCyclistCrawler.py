@@ -36,7 +36,7 @@ class TaiwanCyclistCrawler():
         if soup is None:
             raise ValueError("The source code is emtpy.")
 
-        tableRow = soup.findAll('div', attrs={'class': 'eventItem'})
+        tableRow = soup.find_all('div', attrs={'class': 'eventItem'})
 
         for row in tableRow:
             status = row.find('span', attrs={'class': 'btn'}).text
