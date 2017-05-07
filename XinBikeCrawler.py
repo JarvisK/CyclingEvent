@@ -30,6 +30,3 @@ class XinBikeCrawler:
             else:
                 self.__eventURL.append('http:' + str(target_dom.attrs['href']))
                 self.__eventName.append(target_dom.text)
-
-        print(len(self.__eventURL))
-        print(len(self.__eventName))
