@@ -31,6 +31,7 @@ class TaiwanCyclistCrawler():
                 self.parser(soup=bufySource)
 
         print("Taiwan cyclist complete.")
+        print(self.__eventName)
 
     def parser(self, soup):
         if soup is None:

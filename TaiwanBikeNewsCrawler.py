@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 class TaiwanBikeNewsCrawler():
     domainURL = "http://www.taiwanbike.org"
     __targetURL = "http://www.taiwanbike.org/index.php/2009-01-20-17-17-03"
-    pageSeparator = 20
+    pageSeparator = 0
     __eventName = []
     __eventURL = []
 
@@ -35,16 +35,16 @@ class TaiwanBikeNewsCrawler():
             raise ValueError("The source code is empty.")
 
         soup = BeautifulSoup(sourceCode, "lxml")
-        tableRow = soup.find('form', attrs={'name': 'adminForm'}).find('table').find_all('tr')
-
-        if tableRow == None:
+        try:
+            tableRow = soup.find('form', attrs={'name': 'adminForm'}).find('table').find_all('tr')
+        except:
             return False
 
         for i, row in enumerate(tableRow):
             if 2 < i < 23:
                 try:
-                    self.__eventName.append(str(row.contents[3].a.string).strip('\t\n\r'))
-                    self.__eventURL.append(self.domainURL + str(row.contents[3].a.attrs['href']).strip('\t\n\r'))
+                    self.__eventName.append(str(row.find('a').text).strip('\t\n\r'))
+                    self.__eventURL.append(self.domainURL + str(row.find('a').attrs['href']).strip('\t\n\r'))
                 except:
                     return False
 

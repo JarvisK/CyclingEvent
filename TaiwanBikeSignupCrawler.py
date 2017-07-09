@@ -13,8 +13,6 @@ class TaiwanBikeSignupCrawler():
             if source is None:
                 raise ValueError("The source code is empty.")
 
-            print("Processing " + self.__targetURL)
-
             self.parser(sourceCode=source)
 
         print("Taiwan bike signup complete")
@@ -26,8 +24,17 @@ class TaiwanBikeSignupCrawler():
         print("Processing " + self.__targetURL)
 
         soup = BeautifulSoup(sourceCode, "lxml")
-        tableRow = soup.find('td', attrs={'class': 'article_indent'}).find_all('a')
-        # tableRow = soup.find('table')
-        for row in tableRow:
-            self.__eventURL.append(row.attrs['href'])
-            self.__eventName.append(row.find('span').text)
+        block = soup.find_all('p', attrs={'style': 'font-size: 12.16px; line-height: 15.808px;'})
+
+        for content in block:
+            main_tag = content.find("a", attrs={"rel": "noopener noreferrer"})
+            if main_tag is None:
+                continue
+
+            name = main_tag.find('span')
+            if name is None:
+                name = main_tag.text
+            else:
+                name = name.text
+            self.__eventURL.append(main_tag.attrs['href'])
+            self.__eventName.append(name)
