@@ -1,10 +1,11 @@
+# -*- coding: utf-8 -*-
 import urllib.request
 from bs4 import BeautifulSoup
 
 class TaiwanBikeSignupCrawler():
     __targetURL = "http://www.taiwanbike.org/index.php/2012-01-17-13-13-47"
-    __eventName = []
-    __eventURL = []
+    eventName = []
+    eventURL = []
 
     def startCrawler(self):
         with urllib.request.urlopen(self.__targetURL) as response:
@@ -36,5 +37,5 @@ class TaiwanBikeSignupCrawler():
                 name = main_tag.text
             else:
                 name = name.text
-            self.__eventURL.append(main_tag.attrs['href'])
-            self.__eventName.append(name)
+            self.eventURL.append(main_tag.attrs['href'])
+            self.eventName.append(name)
