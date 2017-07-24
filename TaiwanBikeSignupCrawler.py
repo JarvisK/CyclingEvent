@@ -1,14 +1,17 @@
 # -*- coding: utf-8 -*-
 import urllib.request
+from TaiwanBikeSignupModel import TaiwanBikeSignupModel
 from bs4 import BeautifulSoup
 
 class TaiwanBikeSignupCrawler():
-    __targetURL = "http://www.taiwanbike.org/index.php/2012-01-17-13-13-47"
-    eventName = []
-    eventURL = []
+
+    def __init__(self):
+        self.targetURL = "http://www.taiwanbike.org/index.php/2012-01-17-13-13-47"
+        self.eventName = []
+        self.eventURL = []
 
     def startCrawler(self):
-        with urllib.request.urlopen(self.__targetURL) as response:
+        with urllib.request.urlopen(self.targetURL) as response:
             source = response.read()
 
             if source is None:
@@ -22,7 +25,7 @@ class TaiwanBikeSignupCrawler():
         if sourceCode is None:
             raise ValueError("The source code is empty.")
 
-        print("Processing " + self.__targetURL)
+        print("Processing " + self.targetURL)
 
         soup = BeautifulSoup(sourceCode, "lxml")
         block = soup.find_all('p', attrs={'style': 'font-size: 12.16px; line-height: 15.808px;'})
@@ -39,3 +42,12 @@ class TaiwanBikeSignupCrawler():
                 name = name.text
             self.eventURL.append(main_tag.attrs['href'])
             self.eventName.append(name)
+
+    def fillData(self):
+        # Check data existence
+        if len(self.eventName) == 0 or len(self.eventURL) == 0:
+            return
+
+        # Insert data
+        model = TaiwanBikeSignupModel(self)
+        model.insertAll()

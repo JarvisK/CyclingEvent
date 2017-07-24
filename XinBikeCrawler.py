@@ -1,21 +1,25 @@
+# -*- coding: utf-8 -*-
 import urllib.request
+from XinBikeModel import XinBikeModel
 from bs4 import BeautifulSoup
 
 class XinBikeCrawler:
-    __targetURL = "http://solomo.xinmedia.com/bike/events?style=text"
-    __eventName = []
-    __eventURL = []
+
+    def __init__(self):
+        self.targetURL = "http://solomo.xinmedia.com/bike/events?style=text"
+        self.eventName = []
+        self.eventURL = []
 
     def startCrawler(self):
-        with urllib.request.urlopen(self.__targetURL) as response:
+        with urllib.request.urlopen(self.targetURL) as response:
             source = response.read()
 
             if source is None:
                 raise ValueError("The source code is empty.")
 
-            print("Processing " + self.__targetURL)
-
+            print("Processing " + self.targetURL)
             self.parser(sourceCode=source)
+            print("Xinbike complete")
 
     def parser(self, sourceCode=None):
         if sourceCode is None:
@@ -28,5 +32,12 @@ class XinBikeCrawler:
             if target_dom is None:
                 continue
             else:
-                self.__eventURL.append('http:' + str(target_dom.attrs['href']))
-                self.__eventName.append(target_dom.text)
+                self.eventURL.append('http:' + str(target_dom.attrs['href']))
+                self.eventName.append(target_dom.text)
+
+    def fillData(self):
+        if len(self.eventName) == 0 or len(self.eventURL) == 0:
+            return
+
+        model = XinBikeModel(self)
+        model.insertAll()

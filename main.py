@@ -4,15 +4,21 @@ from TaiwanCyclistCrawler import TaiwanCyclistCrawler
 from XinBikeCrawler import XinBikeCrawler
 
 def main():
-    # a = TaiwanBikeSignupCrawler()
-    # a.startCrawler()
-    # b = TaiwanBikeNewsCrawler()
-    # b.startCrawler()
-    # c = TaiwanCyclistCrawler()
-    # c.startCrawler()
-    d = XinBikeCrawler()
+    a = XinBikeCrawler()
+    a.startCrawler()
+    a.fillData()
+
+    b = TaiwanBikeNewsCrawler()
+    b.startCrawler()
+    b.fillData()
+
+    c = TaiwanBikeSignupCrawler()
+    c.startCrawler()
+    c.fillData()
+
+    d = TaiwanCyclistCrawler()
     d.startCrawler()
-    # http://bao-ming.com/eb/www/reg.php?activitysn=2048
+    d.fillData()
 
 if __name__ == "__main__":
     main()

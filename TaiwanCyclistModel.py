@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from MysqlConnector import MysqlConnector
 
-
-class TaiwanBikeSignupModel(MysqlConnector):
+class TaiwanCyclistModel(MysqlConnector):
 
     def __init__(self, crawler):
         self.crawler = crawler
@@ -10,7 +9,7 @@ class TaiwanBikeSignupModel(MysqlConnector):
     def insertAll(self):
         for name, url in zip(self.crawler.eventName, self.crawler.eventURL):
             sql = ("INSERT INTO events (name, source_site, source_url, created_at, updated_at)"
-                    "VALUES (%s, %s, %s, now(), now())")
+                   "VALUES (%s, %s, %s, now(), now())")
 
-            param = (name, "Taiwan Bike", url)
+            param = (name, "Taiwan Cyclist", url)
             self.query(sql, param)

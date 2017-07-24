@@ -1,13 +1,14 @@
+# -*- coding: utf-8 -*-
 import urllib.request
+from TaiwanBikeNewsModel import TaiwanBikeNewsModel
 from bs4 import BeautifulSoup
-
 
 class TaiwanBikeNewsCrawler():
     domainURL = "http://www.taiwanbike.org"
     __targetURL = "http://www.taiwanbike.org/index.php/2009-01-20-17-17-03"
     pageSeparator = 0
-    __eventName = []
-    __eventURL = []
+    eventName = []
+    eventURL = []
 
     def startCrawler(self):
         morePages = True
@@ -43,9 +44,16 @@ class TaiwanBikeNewsCrawler():
         for i, row in enumerate(tableRow):
             if 2 < i < 23:
                 try:
-                    self.__eventName.append(str(row.find('a').text).strip('\t\n\r'))
-                    self.__eventURL.append(self.domainURL + str(row.find('a').attrs['href']).strip('\t\n\r'))
+                    self.eventName.append(str(row.find('a').text).strip('\t\n\r'))
+                    self.eventURL.append(self.domainURL + str(row.find('a').attrs['href']).strip('\t\n\r'))
                 except:
                     return False
 
         return True
+
+    def fillData(self):
+        if len(self.eventName) <= 0 or len(self.eventURL) <= 0:
+            return
+
+        model = TaiwanBikeNewsModel(self)
+        model.insertAll()

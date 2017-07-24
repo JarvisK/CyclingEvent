@@ -9,6 +9,8 @@ class MysqlConnector:
     __user = 'root'
     __pwd = 'a97222037'
     __db = 'cycling_event'
+    __cnx = None
+    __cursor = None
 
     def __open(self):
         self.__cnx = mysql.connector.connect(
